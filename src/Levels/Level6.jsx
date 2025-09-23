@@ -27,7 +27,7 @@ const Level6 = ({ setCompletedLevels }) => {
       level4: true,
       level5: true,
       level6: true,
-      level7: true,
+      level7: false,
     };
     localStorage.setItem("completedLevels", JSON.stringify(completedLevels));
     const array = [];
@@ -40,7 +40,7 @@ const Level6 = ({ setCompletedLevels }) => {
     setCompletedLevels(completedLevels);
 
     // Navigate to the specified next level
-    navigate(nextLevel, { state: { prev: location.state?.prev + '-' + 6 } });
+    navigate(nextLevel, { state: { prev: location.state?.prev + '-' + 6 , origin: 'level6'} });
   };
 
   useEffect(() => {

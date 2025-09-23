@@ -32,7 +32,7 @@ const Level13 = ({ setCompletedLevels }) => {
       level11: true,
       level12: true,
       level13: true,
-      level14: true,
+      level14: false,
     };
     localStorage.setItem("completedLevels", JSON.stringify(completedLevels));
 
@@ -44,16 +44,21 @@ const Level13 = ({ setCompletedLevels }) => {
 
     // Navigate to FinalResult13 based on path condition
     // Navigate to FinalResult13 based on path condition
-    const isPathB =
-      localStorage.getItem("level10Result") &&
-      localStorage.getItem("level14Result");
-
-    if (isPathB) {
-      navigate("/result13", { state: { isPathB: true } });
-    } else {
-      navigate("/result13", { state: { isPathB: false } });
+    const isPathA = localStorage.getItem("level9Result");
+    var isPathC, isPathB;
+    
+    if(localStorage.getItem("level10Result")){
+      if(localStorage.getItem("level14Result")){
+        isPathC = true;
+      }
+      else{
+        isPathB = true;
+      }
     }
-    const path = location.state.prev + '-' + 13;
+    
+    navigate("/result13", { state: { isPathA: isPathA, isPathB: isPathB, isPathC: isPathC } });
+    
+    const path = location.state?.prev + '-' + 13;
     const storedData = JSON.parse(localStorage.getItem("path")) || {};
     if (storedData[path] == false) {
       storedData[path] = true; // Update to true
@@ -65,7 +70,7 @@ const Level13 = ({ setCompletedLevels }) => {
       alert("You are not allowed to access Level 13!");
       navigate("/level1"); // Redirect to home or another page
     }
-    const path = location.state.prev + '-' + 13;
+    const path = location.state?.prev + '-' + 13;
     const storedData = JSON.parse(localStorage.getItem("path")) || {};
     if (storedData[path]) {
       alert("You have completed this path");
@@ -316,11 +321,11 @@ const Level13 = ({ setCompletedLevels }) => {
       </div>
 
       {/* Display all deck cards in a grid format */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-x-4 gap-y-4 mb-20 items-center mx-auto">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3 mb-10 mx-auto">
         {deck.map((card) => (
           <div
             key={card.id}
-            className="border w-40 h-24 border-blue-500 p-4 bg-gray-100 rounded-lg text-center cursor-pointer hover:bg-gray-200" // Reduced from w-48 h-32 to w-40 h-24
+            className="border border-blue-500 bg-gray-100 rounded-lg text-center cursor-pointer hover:bg-gray-200 flex justify-center items-center text-sm sm:text-base p-2"
             onClick={() => selectCard(card, setSelectedCards)}
           >
             <p>{card.text}</p>
